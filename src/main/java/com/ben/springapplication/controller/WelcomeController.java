@@ -1,31 +1,28 @@
 package com.ben.springapplication.controller;
 
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
-import com.ben.springapplication.service.AuthenticationService;
 
 @Controller
 @RequestMapping("/apiv1/todo")
 @SessionAttributes({"name", "password"})
-public class WelcomeController {
-
-	private AuthenticationService authenticationService;
-
-	public WelcomeController(AuthenticationService authenticationService) {
-		this.authenticationService = authenticationService;
-	}
-	
+public class WelcomeController {	
 	
 	@RequestMapping("/")
 	public String welcome(ModelMap model) {
-		model.put("name", "Kiran");
+		model.put("name", getLoggedInUsername());
 		return "welcome";
+	}
+	
+	
+	public String getLoggedInUsername() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return authentication.getName();
 	}
 	
 	

@@ -7,11 +7,9 @@
 
 	<s:form method="post" modelAttribute="todo">
 
-		<fieldset>
-			<s:label path="id">ID</s:label>
-			<s:input type="text" path="id" readonly="true" />
-			<s:errors path="id" cssClass="text-warning" />
-		</fieldset>
+
+			<s:input type="hidden" path="id" readonly="true" />
+
 
 		<fieldset>
 			<s:label path="description">Description</s:label>
@@ -21,15 +19,12 @@
 
 		<fieldset>
 			<s:label path="planDate">Plan Date</s:label>
-			<s:input type="text" path="planDate" />
+			<s:input type="date" path="planDate" />
 			<s:errors path="planDate" cssClass="text-warning" />
 		</fieldset>
 
-		<fieldset>
-			<s:label path="status">Status</s:label>
-			<s:input type="text" path="status" readonly="true"/>
-			<s:errors path="status" cssClass="text-warning" />
-		</fieldset>
+			<s:input type="hidden" path="status" readonly="true"/>
+
 
 
 		<button type="submit">Submit</button>

@@ -7,8 +7,6 @@
 	<table class="table" cellpadding="10px" border cellspacing="0">
 		<thead>
 			<tr>
-				<th>ID</th>
-				<th>NAME</th>
 				<th>DESCRIPTION</th>
 				<th>PLAN DATE</th>
 				<th>STATUS</th>
@@ -19,8 +17,6 @@
 		<tbody>
 			<c:forEach items="${todos}" var="todo">
 				<tr>
-					<td>${todo.getId()}</td>
-					<td>${todo.getName()}</td>
 					<td>${todo.getDescription()}</td>
 					<td>${todo.getPlanDate()}</td>
 					<td>${todo.getStatus()}</td>

@@ -2,16 +2,26 @@ package com.ben.springapplication.dto;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 
+@Entity
 public class Todo {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	private Integer id;
 	private String name;
 	
 	@Size(min=10, message="Enter minimum 10 characters")
 	private String description;
 	
+	@Column(name="plan date")
 	private LocalDate planDate;
 	private Boolean status;
 
