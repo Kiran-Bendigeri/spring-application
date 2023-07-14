@@ -39,6 +39,11 @@ public class TodoService {
 		return todo.add(tudu);
 	}
 	
+	public Todo findByUsername(String username) {
+		Predicate<? super Todo> predicate = (t) -> t.getName().equalsIgnoreCase(username);
+		return todo.stream().filter(predicate).findFirst().get();
+	}
+	
 	public Todo findById(Integer id) {
 		Predicate<? super Todo> predicate = (t) -> t.getId() == id;
 		return todo.stream().filter(predicate).findFirst().get();

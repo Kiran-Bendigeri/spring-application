@@ -21,13 +21,15 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/apiv1/todo")
-@SessionAttributes({"name", "password"})
+@SessionAttributes({"name"})
 public class TodoController {
 	
 	private TodoService todoservice;
+	private WelcomeController webController;
 	
-	public TodoController(TodoService todoservice) {
+	public TodoController(TodoService todoservice, WelcomeController webController) {
 		this.todoservice = todoservice;
+		this.webController = webController;
 	}
 	
 	@RequestMapping(value="/todos-list", method=RequestMethod.GET)
@@ -39,9 +41,13 @@ public class TodoController {
 	
 	@RequestMapping(value="add-todos", method=RequestMethod.GET)
 	public String addTodo(ModelMap model) {
-		Todo todo = new Todo(0, model.getOrDefault("name", "User").toString(), "", LocalDate.now().plusYears(1), false);
+		Todo todo = new Todo(0, getLoggedInUserName(), "", LocalDate.now().plusYears(1), false);
 		model.addAttribute("todo", todo);
 		return "add-todo";
+	}
+
+	private String getLoggedInUserName() {
+		return webController.getLoggedInUsername();
 	}
 	
 	@RequestMapping(value="add-todos", method=RequestMethod.POST)
@@ -49,7 +55,7 @@ public class TodoController {
 		if(bindingResult.hasErrors()) {
 			return "add-todo";
 		}
-		todoservice.addTodo(model.get("name").toString(), todo.getDescription());
+		todoservice.addTodo(getLoggedInUserName(), todo.getDescription());
 		return "redirect:todos-list";
 	}
 	
@@ -71,7 +77,7 @@ public class TodoController {
 		if(bindingResult.hasErrors()) {
 			return "add-todo";
 		}
-		todo.setName(model.get("name").toString());
+		todo.setName(getLoggedInUserName());
 		todoservice.updateTodo(todo);
 		return "redirect:todos-list";
 	}
